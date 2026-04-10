@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Minesweeper.App.ViewModels"
+             x:Class="Minesweeper.App.Views.GameView"
+             x:DataType="vm:GameViewModel">
+    <Grid RowDefinitions="Auto, Auto, Auto, *">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center" Margin="10">
+            <ComboBox ItemsSource="{Binding AvailablePresets}" 
+                      SelectedItem="{Binding SelectedPreset}" 
+                      DisplayMemberBinding="{Binding Name}"
+                      VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding MinesLeft, StringFormat='Mines: {0}'}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding ElapsedSeconds, StringFormat='Time: {0}'}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Command="{Binding RestartCommand}" Content="Restart" VerticalAlignment="Center"/>
+            <Button Command="{Binding QuickRematchCommand}" Content="Quick Rematch" VerticalAlignment="Center"/>
+            <Button Command="{Binding PlayDailyChallengeCommand}" Content="Daily Challenge" VerticalAlignment="Center"/>
+            <CheckBox IsChecked="{Binding HighContrastEnabled}" Content="High Contrast" VerticalAlignment="Center"/>
+            <CheckBox IsChecked="{Binding ReducedMotionEnabled}" Content="Reduced Motion" VerticalAlignment="Center"/>
+        </StackPanel>
+        
+        <TextBlock Grid.Row="1" 
+                   Text="{Binding GameOverMessage}" 
+                   IsVisible="{Binding IsGameOver}" 
+                   Foreground="Red" 
+                   FontSize="22" 
+                   FontWeight="Black" 
+                   HorizontalAlignment="Center" 
+                   Margin="10"/>
+
+        <StackPanel Grid.Row="2" Margin="10,0" Spacing="4">
+            <TextBlock Text="{Binding StatsSummaryText}" FontSize="13"/>
+            <TextBlock Text="{Binding BestTimesText}" FontSize="13"/>
+            <TextBlock Text="{Binding PerformanceSummaryText}" FontSize="13"/>
+        </StackPanel>
+        
+        <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10">
+            <ItemsControl ItemsSource="{Binding Cells}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding BoardWidth}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="vm:CellViewModel">
+                    <Button Width="32" Height="32" 
+                            Command="{Binding RevealCommand}" 
+                            HorizontalContentAlignment="Center" 
+                            VerticalContentAlignment="Center"
+                            Background="{Binding CellBackground}"
+                            Padding="2"
+                            PointerPressed="Cell_PointerPressed">
+                        <Panel>
+                            <TextBlock Text="{Binding ContentText}" 
+                                       Foreground="{Binding ForegroundScale}" 
+                                       FontWeight="Black" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center" 
+                                       IsVisible="{Binding HasText}"/>
+                            <Path Data="{Binding ContentPathData}" 
+                                  Fill="{Binding ForegroundScale}" 
+                                  Stretch="Uniform" 
+                                  Margin="2" 
+                                  IsVisible="{Binding HasPath}"/>
+                        </Panel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
