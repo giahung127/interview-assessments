@@ -22,12 +22,12 @@ public class GameEngineTests
     {
         var engine = new GameEngine(new StandardBoardGenerator(), new SystemClockService());
         engine.StartNewGame(new DifficultyPreset("Custom", 5, 5, 24));
-        
+
         engine.RevealCell(2, 2);
         var snapshot = engine.GetSnapshot();
-        
+
         Assert.NotEqual(GameStatus.Lost, snapshot.Status);
-        
+
         int mines = 0;
         foreach (var cell in snapshot.Cells)
         {

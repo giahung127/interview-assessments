@@ -2,12 +2,10 @@ namespace Minesweeper.Core.Models;
 
 public record UserSettings(
     string LastSelectedDifficulty,
-    bool HighContrastEnabled,
-    bool ReducedMotionEnabled
+    bool HighContrastEnabled
 )
 {
     public static UserSettings Default => new(
         DifficultyPreset.Beginner.Name,
-        HighContrastEnabled: false,
-        ReducedMotionEnabled: false);
+        HighContrastEnabled: false);
 }

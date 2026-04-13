@@ -7,7 +7,6 @@ public sealed class SqliteSettingsStore : ISettingsStore
 {
     private const string DifficultyKey = "last_selected_difficulty";
     private const string HighContrastKey = "high_contrast_enabled";
-    private const string ReducedMotionKey = "reduced_motion_enabled";
 
     private readonly SqliteStorage _storage;
 
@@ -22,9 +21,8 @@ public sealed class SqliteSettingsStore : ISettingsStore
 
         var difficulty = ReadSetting(connection, DifficultyKey) ?? UserSettings.Default.LastSelectedDifficulty;
         var highContrast = ParseBool(ReadSetting(connection, HighContrastKey));
-        var reducedMotion = ParseBool(ReadSetting(connection, ReducedMotionKey));
 
-        return new UserSettings(difficulty, highContrast, reducedMotion);
+        return new UserSettings(difficulty, highContrast);
     }
 
     public void Save(UserSettings settings)
@@ -33,7 +31,6 @@ public sealed class SqliteSettingsStore : ISettingsStore
 
         WriteSetting(connection, DifficultyKey, settings.LastSelectedDifficulty);
         WriteSetting(connection, HighContrastKey, settings.HighContrastEnabled ? "1" : "0");
-        WriteSetting(connection, ReducedMotionKey, settings.ReducedMotionEnabled ? "1" : "0");
     }
 
     private static string? ReadSetting(Microsoft.Data.Sqlite.SqliteConnection connection, string key)

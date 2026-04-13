@@ -1,5 +1,4 @@
 namespace Minesweeper.Core.Interfaces;
-using System;
 
 public interface IClockService
 {

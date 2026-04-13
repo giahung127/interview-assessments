@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Minesweeper.Core.Models;
 
 public record GameSessionSnapshot(

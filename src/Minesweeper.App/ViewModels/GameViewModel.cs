@@ -2,7 +2,6 @@ using Avalonia.Threading;
 using Minesweeper.Core.Interfaces;
 using Minesweeper.Core.Models;
 using ReactiveUI;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -41,7 +40,6 @@ public class GameViewModel : ViewModelBase
             }
 
             this.RaiseAndSetIfChanged(ref _currentPreset, value);
-            PersistSettings();
 
             if (SelectDifficultyCommand.CanExecute(value))
             {
@@ -101,17 +99,6 @@ public class GameViewModel : ViewModelBase
             this.RaiseAndSetIfChanged(ref _highContrastEnabled, value);
             PersistSettings();
             RefreshCellStyles();
-        }
-    }
-
-    private bool _reducedMotionEnabled;
-    public bool ReducedMotionEnabled
-    {
-        get => _reducedMotionEnabled;
-        set
-        {
-            this.RaiseAndSetIfChanged(ref _reducedMotionEnabled, value);
-            PersistSettings();
         }
     }
 
@@ -255,7 +242,6 @@ public class GameViewModel : ViewModelBase
             var settings = _settingsStore.Load();
             _currentPreset = GetPresetByName(settings.LastSelectedDifficulty);
             HighContrastEnabled = settings.HighContrastEnabled;
-            ReducedMotionEnabled = settings.ReducedMotionEnabled;
             this.RaisePropertyChanged(nameof(SelectedPreset));
         }
         finally
@@ -273,8 +259,7 @@ public class GameViewModel : ViewModelBase
 
         _settingsStore.Save(new UserSettings(
             LastSelectedDifficulty: _currentPreset.Name,
-            HighContrastEnabled: HighContrastEnabled,
-            ReducedMotionEnabled: ReducedMotionEnabled));
+            HighContrastEnabled: HighContrastEnabled));
     }
 
     private void RefreshStatsSummary()

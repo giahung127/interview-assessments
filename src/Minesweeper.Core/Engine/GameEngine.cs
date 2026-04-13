@@ -1,8 +1,5 @@
 namespace Minesweeper.Core.Engine;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Minesweeper.Core.Interfaces;
 using Minesweeper.Core.Models;
 
@@ -22,20 +19,20 @@ public class GameEngine : IGameEngine
     public void StartNewGame(DifficultyPreset preset, int? seed = null)
     {
         _random = seed.HasValue ? new DotNetRandomProvider(seed.Value) : new DotNetRandomProvider();
-        
+
         var board = _boardGenerator.Generate(preset.Rows, preset.Cols, preset.MineCount, _random);
         _session = new GameSession(board);
-        
+
         _clockService.Reset();
     }
 
     public void RevealCell(int row, int col)
     {
-        if (_session == null || _session.Status == GameStatus.Won || _session.Status == GameStatus.Lost) 
+        if (_session == null || _session.Status == GameStatus.Won || _session.Status == GameStatus.Lost)
             return;
 
         var cell = _session.Board.GetCell(row, col);
-        if (cell.Visibility != CellVisibility.Hidden) 
+        if (cell.Visibility != CellVisibility.Hidden)
             return;
 
         if (_session.Status == GameStatus.NotStarted)
@@ -63,11 +60,11 @@ public class GameEngine : IGameEngine
 
     public void ToggleFlag(int row, int col)
     {
-        if (_session == null || _session.Status == GameStatus.Won || _session.Status == GameStatus.Lost) 
+        if (_session == null || _session.Status == GameStatus.Won || _session.Status == GameStatus.Lost)
             return;
 
         var cell = _session.Board.GetCell(row, col);
-        if (cell.Visibility == CellVisibility.Revealed) 
+        if (cell.Visibility == CellVisibility.Revealed)
             return;
 
         if (_session.Status == GameStatus.NotStarted)
@@ -90,16 +87,16 @@ public class GameEngine : IGameEngine
 
     public void ChordReveal(int row, int col)
     {
-        if (_session == null || _session.Status != GameStatus.InProgress) 
+        if (_session == null || _session.Status != GameStatus.InProgress)
             return;
 
         var cell = _session.Board.GetCell(row, col);
-        if (cell.Visibility != CellVisibility.Revealed || cell.NeighborMines == 0) 
+        if (cell.Visibility != CellVisibility.Revealed || cell.NeighborMines == 0)
             return;
 
         int flagCount = 0;
         var neighbors = GetNeighbors(row, col).ToList();
-        
+
         foreach (var n in neighbors)
         {
             if (n.Visibility == CellVisibility.Flagged)
@@ -158,9 +155,9 @@ public class GameEngine : IGameEngine
     {
         var queue = new Queue<Cell>();
         var startCell = _session!.Board.GetCell(startRow, startCol);
-        
+
         if (startCell.Visibility != CellVisibility.Hidden) return;
-        
+
         queue.Enqueue(startCell);
 
         while (queue.Count > 0)
@@ -192,7 +189,7 @@ public class GameEngine : IGameEngine
                 if (i == 0 && j == 0) continue;
                 int nr = row + i;
                 int nc = col + j;
-                
+
                 if (_session!.Board.IsInBounds(nr, nc))
                 {
                     yield return _session.Board.GetCell(nr, nc);
@@ -231,7 +228,7 @@ public class GameEngine : IGameEngine
         {
             _session.Status = GameStatus.Won;
             _clockService.Stop();
-            
+
             foreach (var cell in _session.Board.GetAllCells())
             {
                 if (cell.IsMine && cell.Visibility != CellVisibility.Flagged)

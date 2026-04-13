@@ -1,6 +1,5 @@
 namespace Minesweeper.Core.Engine;
 
-using System;
 using System.Diagnostics;
 using Minesweeper.Core.Interfaces;
 

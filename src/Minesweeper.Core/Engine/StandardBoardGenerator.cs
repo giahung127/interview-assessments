@@ -1,7 +1,5 @@
 namespace Minesweeper.Core.Engine;
 
-using System;
-using System.Collections.Generic;
 using Minesweeper.Core.Interfaces;
 using Minesweeper.Core.Models;
 
@@ -35,12 +33,12 @@ public class StandardBoardGenerator : IBoardGenerator
         if (!cell.IsMine) return;
 
         cell.IsMine = false;
-        
+
         while (true)
         {
             int r = random.Next(board.Rows);
             int c = random.Next(board.Cols);
-            
+
             if ((r != row || c != col) && !board.GetCell(r, c).IsMine)
             {
                 board.GetCell(r, c).IsMine = true;
@@ -72,7 +70,7 @@ public class StandardBoardGenerator : IBoardGenerator
                         if (i == 0 && j == 0) continue;
                         int nr = r + i;
                         int nc = c + j;
-                        
+
                         if (board.IsInBounds(nr, nc) && board.GetCell(nr, nc).IsMine)
                         {
                             count++;

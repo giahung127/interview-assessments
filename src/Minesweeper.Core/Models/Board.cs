@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Minesweeper.Core.Models;
 
 public class Board
@@ -29,7 +27,7 @@ public class Board
     {
         return _cells[row, col];
     }
-    
+
     public bool IsInBounds(int row, int col)
     {
         return row >= 0 && row < Rows && col >= 0 && col < Cols;

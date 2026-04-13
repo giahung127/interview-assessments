@@ -11,11 +11,10 @@
                       VerticalAlignment="Center"/>
             <TextBlock Text="{Binding MinesLeft, StringFormat='Mines: {0}'}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
             <TextBlock Text="{Binding ElapsedSeconds, StringFormat='Time: {0}'}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
-            <Button Command="{Binding RestartCommand}" Content="Restart" VerticalAlignment="Center"/>
-            <Button Command="{Binding QuickRematchCommand}" Content="Quick Rematch" VerticalAlignment="Center"/>
-            <Button Command="{Binding PlayDailyChallengeCommand}" Content="Daily Challenge" VerticalAlignment="Center"/>
+            <Button Command="{Binding RestartCommand}" Content="Restart" ToolTip.Tip="Start a cleanly randomized game with current settings" VerticalAlignment="Center"/>
+            <Button Command="{Binding QuickRematchCommand}" Content="Quick Rematch" ToolTip.Tip="Replay the exact same board structure again" VerticalAlignment="Center"/>
+            <Button Command="{Binding PlayDailyChallengeCommand}" Content="Daily Challenge" ToolTip.Tip="Play today's deterministic daily challenge board" VerticalAlignment="Center"/>
             <CheckBox IsChecked="{Binding HighContrastEnabled}" Content="High Contrast" VerticalAlignment="Center"/>
-            <CheckBox IsChecked="{Binding ReducedMotionEnabled}" Content="Reduced Motion" VerticalAlignment="Center"/>
         </StackPanel>
         
         <TextBlock Grid.Row="1" 

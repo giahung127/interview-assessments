@@ -14,8 +14,7 @@ public class SqliteStoresTests
 
         var expected = new UserSettings(
             LastSelectedDifficulty: DifficultyPreset.Expert.Name,
-            HighContrastEnabled: true,
-            ReducedMotionEnabled: true);
+            HighContrastEnabled: true);
 
         store.Save(expected);
         var actual = store.Load();

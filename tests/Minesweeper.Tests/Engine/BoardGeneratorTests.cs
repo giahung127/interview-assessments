@@ -20,14 +20,14 @@ public class BoardGeneratorTests
 
         Assert.Equal(15, mineCount);
     }
-    
+
     [Fact]
     public void ComputeNeighborMines_IsCorrect()
     {
         var gen = new StandardBoardGenerator();
         var random = new DotNetRandomProvider(42);
         var board = gen.Generate(5, 5, 5, random);
-        
+
         foreach (var cell in board.GetAllCells())
         {
             if (!cell.IsMine)
@@ -38,7 +38,7 @@ public class BoardGeneratorTests
                     for (int j = -1; j <= 1; j++)
                     {
                         if (i == 0 && j == 0) continue;
-                        if (board.IsInBounds(cell.Row + i, cell.Col + j) && 
+                        if (board.IsInBounds(cell.Row + i, cell.Col + j) &&
                             board.GetCell(cell.Row + i, cell.Col + j).IsMine)
                         {
                             expectedMines++;

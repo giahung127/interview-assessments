@@ -1,6 +1,6 @@
-using Minesweeper.Core.Models;
-
 namespace Minesweeper.Core.Interfaces;
+
+using Minesweeper.Core.Models;
 
 public interface ISettingsStore
 {

@@ -1,6 +1,5 @@
 namespace Minesweeper.Core.Engine;
 
-using System;
 using Minesweeper.Core.Interfaces;
 
 public class DotNetRandomProvider : IRandomProvider

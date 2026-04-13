@@ -1,7 +1,5 @@
 using Minesweeper.Core.Engine;
 using Minesweeper.App.Services;
-using System;
-using System.IO;
 
 namespace Minesweeper.App.ViewModels;
 
